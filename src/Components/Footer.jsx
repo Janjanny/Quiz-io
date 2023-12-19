@@ -11,18 +11,26 @@ const Footer = () => {
       sx={{ padding: "5rem 0 3rem 0", bgcolor: "primary.dark" }}
     >
       <Box width={"80%"} margin={"0 auto"} color={"primary.main"}>
-        <Grid container width={"100%"}>
+        <Grid container width={"100%"} rowSpacing={8}>
           <Grid item xs={12} md={6}>
-            <Box width={"100%"} display={"flex"} flexDirection={"column"}>
+            <Box
+              width={"100%"}
+              display={"flex"}
+              flexDirection={"column"}
+              textAlign={{ xs: "left", sm: "center", md: "left" }}
+            >
               <Typography
                 fontFamily={"ClashDisplay-Bold"}
-                fontSize={"4.5rem"}
                 lineHeight={"4.5rem"}
+                sx={{ fontSize: "clamp(3rem, 4.5vw, 4.5rem)" }}
               >
-                Quiz<span style={{ fontSize: "2rem" }}>.io</span>
+                Quiz
+                <span style={{ fontSize: "clamp(1.5rem, 2vw, 2rem)" }}>
+                  .io
+                </span>
               </Typography>
               <Typography
-                width={"80%"}
+                width={{ xs: "100%", md: "80%" }}
                 fontFamily={"ClashDisplay-Regular"}
                 fontSize={".8rem"}
               >
@@ -38,7 +46,7 @@ const Footer = () => {
               height={"100%"}
               display={"flex"}
               flexDirection={"column"}
-              alignItems={"flex-end"}
+              alignItems={{ xs: "flex-start", sm: "center", md: "flex-end" }}
               justifyContent={"space-between"}
             >
               <Box height={"50%"} display={"flex"} alignItems={"flex-end"}>
@@ -70,11 +78,11 @@ const Footer = () => {
                   >
                     <Typography
                       fontFamily={"ClashDisplay-Regular"}
-                      fontSize={"1rem"}
                       color={"primary.main"}
                       position={"relative"}
                       sx={{
-                        display: { xs: "none", md: "block" },
+                        mt: { xs: "2rem", lg: "0" },
+                        fontSize: "clamp(.9rem, 2.5vw, 1rem)",
                         "&::before": {
                           content: '" "',
                           position: "absolute",

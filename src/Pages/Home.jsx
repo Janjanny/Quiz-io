@@ -34,6 +34,7 @@ const Home = () => {
       <Box
         sx={{
           bgcolor: "primary.light",
+          width: "100%",
           height: "75vh",
           borderBottom: "7px solid",
           borderBottomColor: "primary.dark",
@@ -45,30 +46,33 @@ const Home = () => {
         <Box
           sx={{
             position: "absolute",
+            width: { xs: "90%", sm: "80%", md: "50%" },
             top: "50%",
             left: "50%",
             transform: "translate(-50%,-50%)",
             textAlign: "center",
             zIndex: "5",
+            overflow: "hidden",
           }}
         >
           <Typography
             fontFamily={"ClashDisplay-Bold"}
-            fontSize={"8rem"}
             sx={{
               color: "primary.dark",
               // WebkitTextStroke: "2.5px black",
-              lineHeight: "7rem",
+              lineHeight: { xs: "5rem", md: "6rem", lg: "7rem" },
+              // fontSize: "8rem",
+              fontSize: "clamp(5rem, 10vw, 8rem)",
             }}
           >
-            Quiz<span style={{ fontSize: "5rem" }}>.io</span>
+            Quiz<span style={{ fontSize: "clamp(3rem, 5vw, 5rem)" }}>.io</span>
           </Typography>
           <Typography
             fontFamily={"ClashDisplay-Medium"}
-            fontSize={"1.05rem"}
             color={"primary.dark"}
             fontWeight={"500"}
             mb={"1.5rem"}
+            sx={{ fontSize: "clamp(.8rem, 2vw, 1.05rem)" }}
           >
             Welcome to Quiz.io, where knowledge meets excitement! Unleash your
             inner quizmaster, test your wits, and discover the joy of learning
@@ -76,9 +80,6 @@ const Home = () => {
           </Typography>
           <a href="#quiz-form" style={{ textDecoration: "none" }}>
             <Typography
-              onClick={() => {
-                handleButtonClick();
-              }}
               sx={{
                 cursor: "pointer",
                 color: "primary.dark",
@@ -96,10 +97,11 @@ const Home = () => {
         {/* images */}
         <Box position={"relative"} width={"100%"} height={"100%"} zIndex={1}>
           <Box
-            width={"15rem"}
+            width={{ xs: "10rem", md: "13rem", lg: "15rem" }}
             position={"absolute"}
-            bottom={"-2rem"}
-            left={"8%"}
+            display={{ xs: "none", md: "block" }}
+            bottom={{ xs: "-1.5rem", md: "-2rem" }}
+            left={{ lg: "5%" }}
           >
             <img
               src={Babae}
@@ -108,8 +110,9 @@ const Home = () => {
             />
           </Box>
           <Box
-            width={"9.5rem"}
+            width={{ xs: "6.5rem", md: "7.5rem", lg: "9.5rem" }}
             position={"absolute"}
+            display={{ xs: "none", md: "block" }}
             bottom={"-2rem"}
             right={"8%"}
           >
@@ -119,14 +122,24 @@ const Home = () => {
               style={{ width: "100%", height: "100%" }}
             />
           </Box>
-          <Box width={"9rem"} position={"absolute"} top={"5%"} left={"20%"}>
+          <Box
+            width={{ xs: "6rem", md: "7rem", lg: "9rem" }}
+            position={"absolute"}
+            top={"5%"}
+            left={{ xs: "10%", sm: "15%", md: "18%", lg: "20%" }}
+          >
             <img
               src={Twirl}
               alt="twirl"
               style={{ width: "100%", height: "100%" }}
             />
           </Box>
-          <Box width={"7rem"} position={"absolute"} bottom={"40%"} left={"5%"}>
+          <Box
+            width={{ xs: "4rem", md: "5rem", lg: "7rem" }}
+            position={"absolute"}
+            bottom={{ xs: "10%", sm: "35%", md: "40%" }}
+            left={{ xs: "1%", sm: "2%", md: "3%" }}
+          >
             <img
               src={Triangle}
               alt="Triangle"
@@ -134,7 +147,7 @@ const Home = () => {
             />
           </Box>
           <Box
-            width={"18rem"}
+            width={{ xs: "14rem", md: "16rem", lg: "18rem" }}
             position={"absolute"}
             top={"-2rem"}
             right={"-6rem"}
@@ -146,10 +159,10 @@ const Home = () => {
             />
           </Box>
           <Box
-            width={"9rem"}
+            width={{ xs: "6rem", md: "7rem", lg: "9rem" }}
             position={"absolute"}
-            bottom={"20%"}
-            right={"-4rem"}
+            bottom={{ xs: "20%", md: "30%" }}
+            right={{ xs: "-2rem", sm: "-3rem", md: "-3rem", lg: "-4rem" }}
           >
             <img
               src={Rainbow}
@@ -163,7 +176,7 @@ const Home = () => {
       {/* quiz-form container */}
       <Box
         id="quiz-form"
-        width={"80%"}
+        width={{ xs: "90%", md: "80%" }}
         m={"10rem auto"}
         textAlign={"center"}
         position={"relative"}
@@ -171,7 +184,7 @@ const Home = () => {
         <Typography
           fontFamily={"ClashDisplay-Medium"}
           mt={"10rem"}
-          fontSize={"1.5rem"}
+          sx={{ fontSize: "clamp(1rem, 4vw, 1.5rem)" }}
           fontWeight={"600"}
         >
           Ready, Set, Quiz! Complete the Form to Tailor Your Quiz Experience and
@@ -181,19 +194,19 @@ const Home = () => {
         {/* elements */}
         <Box
           position={"absolute"}
-          width={"13rem"}
+          width={{ xs: "10rem", md: "11rem", lg: "13rem" }}
           zIndex={10}
-          top={"10%"}
-          right={"5%"}
+          top={{ xs: "13%", sm: "13%", md: "12%", lg: "10%" }}
+          right={{ xs: "-5rem", lg: "5%" }}
         >
           <img src={Twirl} alt="" style={{ width: "100%", height: "100%" }} />
         </Box>
 
         <Box
           position={"absolute"}
-          width={"8rem"}
+          width={{ xs: "5rem", md: "6rem", lg: "8rem" }}
           zIndex={10}
-          top={"92%"}
+          top={{ xs: "95%", sm: "95%", md: "94%", lg: "92%" }}
           right={"90%"}
         >
           <img
@@ -207,7 +220,11 @@ const Home = () => {
         <Box
           sx={{
             margin: "8rem auto",
-            padding: "3rem 6rem 5rem 6rem",
+            padding: {
+              xs: "3rem 1rem 3rem 1rem",
+              sm: "3rem 2rem 3rem 2rem",
+              lg: "3rem 6rem 5rem 6rem",
+            },
             border: "4px solid",
             borderColor: "primary.dark",
             borderRadius: "16px",
@@ -218,13 +235,21 @@ const Home = () => {
         >
           <Typography
             fontFamily={"ClashDisplay-Bold"}
-            fontSize={"5rem"}
-            sx={{ color: "blue.main", WebkitTextStroke: "2px black" }}
+            sx={{
+              color: "blue.main",
+              WebkitTextStroke: { xs: "1px black", md: '"2px black"' },
+              fontSize: "clamp(2.5rem, 5vw, 5rem)",
+            }}
           >
             Quiz Form
           </Typography>
           <Box component={"form"} width={"100%"} mt={"3rem"}>
-            <Grid container width={"100%"} rowSpacing={5} columnSpacing={5}>
+            <Grid
+              container
+              width={"100%"}
+              rowSpacing={5}
+              columnSpacing={{ xs: 0, md: 5 }}
+            >
               <Grid item xs={12} textAlign={"left"}>
                 <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
                   Enter Your Name:{" "}
@@ -334,28 +359,30 @@ const Home = () => {
                 </Select>
               </Grid>
 
-              <Grid item xs={12} md={6} textAlign={"right"}>
+              <Grid item xs={12} sm={12} lg={6} textAlign={"right"}>
                 <Button
                   sx={{
                     fontFamily: "ClashDisplay-Bold",
                     textTransform: "capitalize",
                     fontSize: "1.2rem",
                     ...redButtonStyles,
-                    marginTop: "4rem",
+                    marginTop: { xs: "1rem", md: "4rem" },
+                    width: { xs: "100%", md: "fit-content" },
                   }}
                 >
                   Clear Form
                 </Button>
               </Grid>
 
-              <Grid item xs={12} md={6} textAlign={"left"}>
+              <Grid item xs={12} sm={12} lg={6} textAlign={"left"}>
                 <Button
                   sx={{
                     fontFamily: "ClashDisplay-Bold",
                     textTransform: "capitalize",
                     fontSize: "1.2rem",
                     ...yellowButtonStyles,
-                    marginTop: "4rem",
+                    marginTop: { xs: ".5rem", md: "4rem" },
+                    width: { xs: "100%", md: "fit-content" },
                   }}
                 >
                   Submit Form
