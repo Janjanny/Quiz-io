@@ -9,6 +9,7 @@ import ClashDisplaySemibold from "./fonts/ClashDisplay-Semibold.woff2";
 import Home from "./Pages/Home";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import Quiz from "./Pages/Quiz";
 
 function App() {
   const theme = createTheme({
@@ -76,8 +77,8 @@ function App() {
       },
       green: {
         main: "#39CC76",
-        light: "#21A256",
-        dark: "#53E38F",
+        light: "#53E38F",
+        dark: "#21A256",
       },
       yellow: {
         main: "#FFDB3E",
@@ -94,6 +95,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/quiz" element={<Quiz />} />
           </Routes>
           <Footer />
         </Box>
