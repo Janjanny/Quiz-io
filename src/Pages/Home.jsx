@@ -174,221 +174,223 @@ const Home = () => {
       </Box>
 
       {/* quiz-form container */}
-      <Box
-        id="quiz-form"
-        width={{ xs: "90%", md: "80%" }}
-        m={"10rem auto"}
-        textAlign={"center"}
-        position={"relative"}
-      >
-        <Typography
-          fontFamily={"ClashDisplay-Medium"}
-          mt={"10rem"}
-          sx={{ fontSize: "clamp(1rem, 4vw, 1.5rem)" }}
-          fontWeight={"600"}
-        >
-          Ready, Set, Quiz! Complete the Form to Tailor Your Quiz Experience and
-          Begin Your Knowledge Adventure.
-        </Typography>
-
-        {/* elements */}
+      <Box overflow={"hidden"}>
         <Box
-          position={"absolute"}
-          width={{ xs: "10rem", md: "11rem", lg: "13rem" }}
-          zIndex={10}
-          top={{ xs: "13%", sm: "13%", md: "12%", lg: "10%" }}
-          right={{ xs: "-5rem", lg: "5%" }}
-        >
-          <img src={Twirl} alt="" style={{ width: "100%", height: "100%" }} />
-        </Box>
-
-        <Box
-          position={"absolute"}
-          width={{ xs: "5rem", md: "6rem", lg: "8rem" }}
-          zIndex={10}
-          top={{ xs: "95%", sm: "95%", md: "94%", lg: "92%" }}
-          right={"90%"}
-        >
-          <img
-            src={Triangle}
-            alt=""
-            style={{ width: "100%", height: "100%" }}
-          />
-        </Box>
-
-        {/* form */}
-        <Box
-          sx={{
-            margin: "8rem auto",
-            padding: {
-              xs: "3rem 1rem 3rem 1rem",
-              sm: "3rem 2rem 3rem 2rem",
-              lg: "3rem 6rem 5rem 6rem",
-            },
-            border: "4px solid",
-            borderColor: "primary.dark",
-            borderRadius: "16px",
-            boxShadow: " 5px 12px 0px 0px #1e1e1e",
-            position: "relative",
-            zIndex: "5",
-          }}
+          id="quiz-form"
+          width={{ xs: "90%", md: "80%" }}
+          m={"10rem auto"}
+          textAlign={"center"}
+          position={"relative"}
         >
           <Typography
-            fontFamily={"ClashDisplay-Bold"}
+            fontFamily={"ClashDisplay-Medium"}
+            mt={"10rem"}
+            sx={{ fontSize: "clamp(1rem, 4vw, 1.5rem)" }}
+            fontWeight={"600"}
+          >
+            Ready, Set, Quiz! Complete the Form to Tailor Your Quiz Experience
+            and Begin Your Knowledge Adventure.
+          </Typography>
+
+          {/* elements */}
+          <Box
+            position={"absolute"}
+            width={{ xs: "10rem", md: "11rem", lg: "13rem" }}
+            zIndex={10}
+            top={{ xs: "13%", sm: "13%", md: "12%", lg: "10%" }}
+            right={{ xs: "-5rem", lg: "5%" }}
+          >
+            <img src={Twirl} alt="" style={{ width: "100%", height: "100%" }} />
+          </Box>
+
+          <Box
+            position={"absolute"}
+            width={{ xs: "5rem", md: "6rem", lg: "8rem" }}
+            zIndex={10}
+            top={{ xs: "95%", sm: "95%", md: "94%", lg: "92%" }}
+            right={"90%"}
+          >
+            <img
+              src={Triangle}
+              alt=""
+              style={{ width: "100%", height: "100%" }}
+            />
+          </Box>
+
+          {/* form */}
+          <Box
             sx={{
-              color: "blue.main",
-              WebkitTextStroke: { xs: "1px black", md: '"2px black"' },
-              fontSize: "clamp(2.5rem, 5vw, 5rem)",
+              margin: "8rem auto",
+              padding: {
+                xs: "3rem 1rem 3rem 1rem",
+                sm: "3rem 2rem 3rem 2rem",
+                lg: "3rem 6rem 5rem 6rem",
+              },
+              border: "4px solid",
+              borderColor: "primary.dark",
+              borderRadius: "16px",
+              boxShadow: " 5px 12px 0px 0px #1e1e1e",
+              position: "relative",
+              zIndex: "5",
             }}
           >
-            Quiz Form
-          </Typography>
-          <Box component={"form"} width={"100%"} mt={"3rem"}>
-            <Grid
-              container
-              width={"100%"}
-              rowSpacing={5}
-              columnSpacing={{ xs: 0, md: 5 }}
+            <Typography
+              fontFamily={"ClashDisplay-Bold"}
+              sx={{
+                color: "blue.main",
+                WebkitTextStroke: { xs: "1px black", md: '"2px black"' },
+                fontSize: "clamp(2.5rem, 5vw, 5rem)",
+              }}
             >
-              <Grid item xs={12} textAlign={"left"}>
-                <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
-                  Enter Your Name:{" "}
-                </Typography>
-                <TextField
-                  id="name"
-                  size="small"
-                  sx={{
-                    border: "3px solid",
-                    borderColor: "primary.dark",
-                    borderRadius: "6px",
-                    boxShadow: " 4px 4px 0px 0px #000",
-                    width: "100%",
-                  }}
-                />
-              </Grid>
+              Quiz Form
+            </Typography>
+            <Box component={"form"} width={"100%"} mt={"3rem"}>
+              <Grid
+                container
+                width={"100%"}
+                rowSpacing={5}
+                columnSpacing={{ xs: 0, md: 5 }}
+              >
+                <Grid item xs={12} textAlign={"left"}>
+                  <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
+                    Enter Your Name:{" "}
+                  </Typography>
+                  <TextField
+                    id="name"
+                    size="small"
+                    sx={{
+                      border: "3px solid",
+                      borderColor: "primary.dark",
+                      borderRadius: "6px",
+                      boxShadow: " 4px 4px 0px 0px #000",
+                      width: "100%",
+                    }}
+                  />
+                </Grid>
 
-              <Grid item xs={12} md={6} textAlign={"left"}>
-                <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
-                  Number of Items:
-                </Typography>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  size="small"
-                  value={10}
-                  sx={{
-                    border: "3px solid",
-                    borderColor: "primary.dark",
-                    borderRadius: "6px",
-                    boxShadow: " 4px 4px 0px 0px #000",
-                    width: "100%",
-                  }}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
+                <Grid item xs={12} md={6} textAlign={"left"}>
+                  <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
+                    Number of Items:
+                  </Typography>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    size="small"
+                    value={10}
+                    sx={{
+                      border: "3px solid",
+                      borderColor: "primary.dark",
+                      borderRadius: "6px",
+                      boxShadow: " 4px 4px 0px 0px #000",
+                      width: "100%",
+                    }}
+                  >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </Grid>
 
-              <Grid item xs={12} md={6} textAlign={"left"}>
-                <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
-                  Select Difficulty:
-                </Typography>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  size="small"
-                  value={"Easy"}
-                  sx={{
-                    border: "3px solid",
-                    borderColor: "primary.dark",
-                    borderRadius: "6px",
-                    boxShadow: " 4px 4px 0px 0px #000",
-                    width: "100%",
-                  }}
-                >
-                  <MenuItem value={"Easy"}>Easy</MenuItem>
-                  <MenuItem value={"Medium"}>Medium</MenuItem>
-                  <MenuItem value={"Hard"}>Hard</MenuItem>
-                </Select>
-              </Grid>
+                <Grid item xs={12} md={6} textAlign={"left"}>
+                  <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
+                    Select Difficulty:
+                  </Typography>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    size="small"
+                    value={"Easy"}
+                    sx={{
+                      border: "3px solid",
+                      borderColor: "primary.dark",
+                      borderRadius: "6px",
+                      boxShadow: " 4px 4px 0px 0px #000",
+                      width: "100%",
+                    }}
+                  >
+                    <MenuItem value={"Easy"}>Easy</MenuItem>
+                    <MenuItem value={"Medium"}>Medium</MenuItem>
+                    <MenuItem value={"Hard"}>Hard</MenuItem>
+                  </Select>
+                </Grid>
 
-              <Grid item xs={12} md={6} textAlign={"left"}>
-                <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
-                  Select Category:
-                </Typography>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  size="small"
-                  value={"Any Category"}
-                  sx={{
-                    border: "3px solid",
-                    borderColor: "primary.dark",
-                    borderRadius: "6px",
-                    boxShadow: " 4px 4px 0px 0px #000",
-                    width: "100%",
-                  }}
-                >
-                  <MenuItem value={"Any Category"}>Any Category</MenuItem>
-                  <MenuItem value={"Medium"}>Medium</MenuItem>
-                  <MenuItem value={"Hard"}>Hard</MenuItem>
-                </Select>
-              </Grid>
+                <Grid item xs={12} md={6} textAlign={"left"}>
+                  <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
+                    Select Category:
+                  </Typography>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    size="small"
+                    value={"Any Category"}
+                    sx={{
+                      border: "3px solid",
+                      borderColor: "primary.dark",
+                      borderRadius: "6px",
+                      boxShadow: " 4px 4px 0px 0px #000",
+                      width: "100%",
+                    }}
+                  >
+                    <MenuItem value={"Any Category"}>Any Category</MenuItem>
+                    <MenuItem value={"Medium"}>Medium</MenuItem>
+                    <MenuItem value={"Hard"}>Hard</MenuItem>
+                  </Select>
+                </Grid>
 
-              <Grid item xs={12} md={6} textAlign={"left"}>
-                <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
-                  Select Quiz Type:
-                </Typography>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  size="small"
-                  value={"Any Type"}
-                  sx={{
-                    border: "3px solid",
-                    borderColor: "primary.dark",
-                    borderRadius: "6px",
-                    boxShadow: " 4px 4px 0px 0px #000",
-                    width: "100%",
-                  }}
-                >
-                  <MenuItem value={"Any Type"}>Any Type</MenuItem>
-                  <MenuItem value={"Medium"}>Medium</MenuItem>
-                  <MenuItem value={"Hard"}>Hard</MenuItem>
-                </Select>
-              </Grid>
+                <Grid item xs={12} md={6} textAlign={"left"}>
+                  <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
+                    Select Quiz Type:
+                  </Typography>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    size="small"
+                    value={"Any Type"}
+                    sx={{
+                      border: "3px solid",
+                      borderColor: "primary.dark",
+                      borderRadius: "6px",
+                      boxShadow: " 4px 4px 0px 0px #000",
+                      width: "100%",
+                    }}
+                  >
+                    <MenuItem value={"Any Type"}>Any Type</MenuItem>
+                    <MenuItem value={"Medium"}>Medium</MenuItem>
+                    <MenuItem value={"Hard"}>Hard</MenuItem>
+                  </Select>
+                </Grid>
 
-              <Grid item xs={12} sm={12} lg={6} textAlign={"right"}>
-                <Button
-                  sx={{
-                    fontFamily: "ClashDisplay-Bold",
-                    textTransform: "capitalize",
-                    fontSize: "1.2rem",
-                    ...redButtonStyles,
-                    marginTop: { xs: "1rem", md: "4rem" },
-                    width: { xs: "100%", md: "fit-content" },
-                  }}
-                >
-                  Clear Form
-                </Button>
-              </Grid>
+                <Grid item xs={12} sm={12} lg={6} textAlign={"right"}>
+                  <Button
+                    sx={{
+                      fontFamily: "ClashDisplay-Bold",
+                      textTransform: "capitalize",
+                      fontSize: "1.2rem",
+                      ...redButtonStyles,
+                      marginTop: { xs: "1rem", md: "4rem" },
+                      width: { xs: "100%", md: "fit-content" },
+                    }}
+                  >
+                    Clear Form
+                  </Button>
+                </Grid>
 
-              <Grid item xs={12} sm={12} lg={6} textAlign={"left"}>
-                <Button
-                  sx={{
-                    fontFamily: "ClashDisplay-Bold",
-                    textTransform: "capitalize",
-                    fontSize: "1.2rem",
-                    ...yellowButtonStyles,
-                    marginTop: { xs: ".5rem", md: "4rem" },
-                    width: { xs: "100%", md: "fit-content" },
-                  }}
-                >
-                  Submit Form
-                </Button>
+                <Grid item xs={12} sm={12} lg={6} textAlign={"left"}>
+                  <Button
+                    sx={{
+                      fontFamily: "ClashDisplay-Bold",
+                      textTransform: "capitalize",
+                      fontSize: "1.2rem",
+                      ...yellowButtonStyles,
+                      marginTop: { xs: ".5rem", md: "4rem" },
+                      width: { xs: "100%", md: "fit-content" },
+                    }}
+                  >
+                    Submit Form
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
         </Box>
       </Box>

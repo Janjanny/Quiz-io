@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import QuizBox from "../Components/QuizBox";
+import { yellowButtonStyles } from "../utils/styles";
 
 const Quiz = () => {
   return (
@@ -41,8 +42,34 @@ const Quiz = () => {
         </Box>
 
         {/* quiz tests container */}
-        <Box mt={"5rem"} width={"100%"}>
+        <Box
+          mt={"5rem"}
+          width={"100%"}
+          display={"flex"}
+          flexDirection={"column"}
+          gap={"5rem"}
+        >
           <QuizBox />
+          <QuizBox />
+
+          <Box
+            width={"100%"}
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+          >
+            <Button
+              sx={{
+                cursor: "pointer",
+                color: "primary.dark",
+                margin: "0 auto",
+                ...yellowButtonStyles,
+                fontFamily: "ClashDisplay-Bold",
+                fontSize: "clamp(1.1rem, 4vw, 1.4rem)",
+                width: { xs: "100%", md: "fit-content" },
+              }}
+            >
+              Submit Quiz
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

@@ -22,7 +22,7 @@ const QuizBox = () => {
       width={"100%"}
       sx={{
         backgroundColor: "primary.main",
-        padding: "3rem",
+        padding: { xs: "2rem 1.5rem", sm: "2rem", md: "2.5rem", lg: "3rem" },
         border: "4px solid",
         borderColor: "primary.dark",
         borderRadius: "16px",
@@ -39,13 +39,13 @@ const QuizBox = () => {
         Corporation?`}
       </Typography>
       {/* grid choices */}
-      <Box width={"100%"} ml={"1rem"}>
+      <Box width={"100%"} ml={{ xs: "0", md: "1rem" }}>
         <Grid
           container
           width={"100%"}
           rowSpacing={3}
           mt={".5rem"}
-          columnSpacing={10}
+          columnSpacing={{ xs: 0, md: 10 }}
         >
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <Typography
