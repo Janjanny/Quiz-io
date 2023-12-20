@@ -22,12 +22,51 @@ import Twirl from "../assets/twirl.svg";
 import Lapis from "../assets/lapis.svg";
 import Rainbow from "../assets/rainbow.svg";
 import Triangle from "../assets/triangle.png";
+import { useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setTemplate } from "../features/quizTemplate";
 
 const Home = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
+  const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState(false);
+
+  // state for form
+  const [formData, setFormData] = useState({
+    name: "",
+    items: 10, // Set a default value
+    difficulty: "Easy", // Set a default value
+    category: "Any Category", // Set a default value
+    quizType: "Any Type", // Set a default value
+  });
+
   const handleButtonClick = () => {
     setIsClicked(!isClicked);
   };
+  const navigate = useNavigate();
+
+  const handleFormSubmit = () => {
+    dispatch(
+      setTemplate({
+        name: formData.name,
+        items: formData.items,
+        difficulty: formData.difficulty,
+        category: formData.category,
+        quizType: formData.quizType,
+      })
+    );
+
+    // Redirect to /quiz after submitting the form
+    navigate("/quiz");
+  };
+
+  // console.log(values);
   return (
     <>
       {/* home container */}
@@ -265,6 +304,10 @@ const Home = () => {
                       boxShadow: " 4px 4px 0px 0px #000",
                       width: "100%",
                     }}
+                    value={formData.name}
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                    }}
                   />
                 </Grid>
 
@@ -276,13 +319,16 @@ const Home = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     size="small"
-                    value={10}
                     sx={{
                       border: "3px solid",
                       borderColor: "primary.dark",
                       borderRadius: "6px",
                       boxShadow: " 4px 4px 0px 0px #000",
                       width: "100%",
+                    }}
+                    value={formData.items}
+                    onChange={(e) => {
+                      setFormData({ ...formData, items: e.target.value });
                     }}
                   >
                     <MenuItem value={10}>Ten</MenuItem>
@@ -299,7 +345,10 @@ const Home = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     size="small"
-                    value={"Easy"}
+                    value={formData.difficulty}
+                    onChange={(e) => {
+                      setFormData({ ...formData, difficulty: e.target.value });
+                    }}
                     sx={{
                       border: "3px solid",
                       borderColor: "primary.dark",
@@ -322,7 +371,10 @@ const Home = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     size="small"
-                    value={"Any Category"}
+                    value={formData.category}
+                    onChange={(e) => {
+                      setFormData({ ...formData, category: e.target.value });
+                    }}
                     sx={{
                       border: "3px solid",
                       borderColor: "primary.dark",
@@ -332,8 +384,8 @@ const Home = () => {
                     }}
                   >
                     <MenuItem value={"Any Category"}>Any Category</MenuItem>
-                    <MenuItem value={"Medium"}>Medium</MenuItem>
-                    <MenuItem value={"Hard"}>Hard</MenuItem>
+                    <MenuItem value={"Medium"}>Music</MenuItem>
+                    <MenuItem value={"Hard"}>Arts</MenuItem>
                   </Select>
                 </Grid>
 
@@ -345,7 +397,10 @@ const Home = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     size="small"
-                    value={"Any Type"}
+                    value={formData.quizType}
+                    onChange={(e) => {
+                      setFormData({ ...formData, quizType: e.target.value });
+                    }}
                     sx={{
                       border: "3px solid",
                       borderColor: "primary.dark",
@@ -355,8 +410,8 @@ const Home = () => {
                     }}
                   >
                     <MenuItem value={"Any Type"}>Any Type</MenuItem>
-                    <MenuItem value={"Medium"}>Medium</MenuItem>
-                    <MenuItem value={"Hard"}>Hard</MenuItem>
+                    <MenuItem value={"Medium"}>True or False</MenuItem>
+                    <MenuItem value={"Hard"}>Multiple Choice</MenuItem>
                   </Select>
                 </Grid>
 
@@ -370,6 +425,15 @@ const Home = () => {
                       marginTop: { xs: "1rem", md: "4rem" },
                       width: { xs: "100%", md: "fit-content" },
                     }}
+                    onClick={() => {
+                      setFormData({
+                        name: "",
+                        numberOfItems: 10,
+                        difficulty: "Easy",
+                        category: "Any Category",
+                        quizType: "Any Type",
+                      });
+                    }}
                   >
                     Clear Form
                   </Button>
@@ -377,6 +441,9 @@ const Home = () => {
 
                 <Grid item xs={12} sm={12} lg={6} textAlign={"left"}>
                   <Button
+                    onClick={() => {
+                      handleFormSubmit();
+                    }}
                     sx={{
                       fontFamily: "ClashDisplay-Bold",
                       textTransform: "capitalize",

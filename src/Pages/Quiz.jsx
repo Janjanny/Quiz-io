@@ -1,8 +1,17 @@
 import { Box, Button, Typography } from "@mui/material";
 import QuizBox from "../Components/QuizBox";
 import { yellowButtonStyles } from "../utils/styles";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Quiz = () => {
+  const templateValues = useSelector((state) => state.quizTemplate.value);
+
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Box
       minHeight={"100vh"}
@@ -10,6 +19,14 @@ const Quiz = () => {
       sx={{ backgroundColor: "primary.light" }}
       paddingBottom={"15rem"}
     >
+      <Box textAlign={"center"}>
+        <strong>Templates</strong>
+        <p>{templateValues.name}</p>
+        <p>{templateValues.items}</p>
+        <p>{templateValues.difficulty}</p>
+        <p>{templateValues.category}</p>
+        <p>{templateValues.quizType}</p>
+      </Box>
       {/* container */}
       <Box width={{ xs: "90%", md: "80%" }} margin={"0 auto"}>
         <Box
