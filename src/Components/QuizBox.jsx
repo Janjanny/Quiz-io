@@ -10,7 +10,16 @@ import {
   blueButtonStyles,
   blueButtonStylesActive,
 } from "../utils/styles";
-const QuizBox = () => {
+const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
+  const choices = Array.isArray(incorrect_answers)
+    ? [...incorrect_answers, correct_answer]
+    : [incorrect_answers, correct_answer];
+
+  // Fisher-Yates shuffle algorithm to randomize the order
+  for (let i = choices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [choices[i], choices[j]] = [choices[j], choices[i]];
+  }
   const [isClicked, setIsClicked] = useState("");
 
   const handleIsClicked = (answer) => {
@@ -35,8 +44,7 @@ const QuizBox = () => {
         fontWeight={"600"}
         sx={{ fontSize: "clamp(.9rem, 4vw, 1.1rem)" }}
       >
-        {`1.) Which company did Gabe Newell work at before founding Valve
-        Corporation?`}
+        {`${index}.) ${question}`}
       </Typography>
       {/* grid choices */}
       <Box width={"100%"} ml={{ xs: "0", md: "1rem" }}>
@@ -66,7 +74,7 @@ const QuizBox = () => {
                 padding: ".6rem",
                 borderRadius: "10px",
               }}
-            >{`a.) Microsoft`}</Typography>
+            >{`a.) ${choices[0]}`}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -88,7 +96,7 @@ const QuizBox = () => {
                 padding: ".6rem",
                 borderRadius: "10px",
               }}
-            >{`b.) Microsoft`}</Typography>
+            >{`b.) ${choices[1]}`}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -110,7 +118,7 @@ const QuizBox = () => {
                 padding: ".6rem",
                 borderRadius: "10px",
               }}
-            >{`c.) Microsoft`}</Typography>
+            >{`c.) ${choices[3]}`}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -132,7 +140,7 @@ const QuizBox = () => {
                 padding: ".6rem",
                 borderRadius: "10px",
               }}
-            >{`d.) Microsoft`}</Typography>
+            >{`d.) ${choices[4]}`}</Typography>
           </Grid>
         </Grid>
       </Box>

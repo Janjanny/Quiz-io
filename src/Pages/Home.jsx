@@ -15,7 +15,7 @@ import {
   redButtonStylesActive,
   greenButtonStyles,
 } from "../utils/styles";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Babae from "../assets/babae.svg";
 import Lalake from "../assets/lalake.svg";
 import Twirl from "../assets/twirl.svg";
@@ -27,11 +27,27 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTemplate } from "../features/quizTemplate";
+import { fetchAPI } from "../utils/fetch";
 
 const Home = () => {
+  const [categoryList, setCategoryList] = useState([]);
+  const firstMount = useRef(true);
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo(0, 0);
+
+    if (firstMount.current) {
+      firstMount.current = false;
+      // fetch data
+      const fetchCategory = async () => {
+        const categoryData = await fetchAPI(
+          "https://opentdb.com/api_category.php"
+        );
+        setCategoryList(categoryData.trivia_categories);
+      };
+
+      fetchCategory();
+    }
   }, []);
 
   const dispatch = useDispatch();
@@ -41,9 +57,9 @@ const Home = () => {
   const [formData, setFormData] = useState({
     name: "",
     items: 10, // Set a default value
-    difficulty: "Easy", // Set a default value
-    category: "Any Category", // Set a default value
-    quizType: "Any Type", // Set a default value
+    difficulty: "easy", // Set a default value
+    category: "any_category", // Set a default value
+    quizType: "multiple", // Set a default value
   });
 
   const handleButtonClick = () => {
@@ -315,9 +331,7 @@ const Home = () => {
                   <Typography fontFamily={"ClashDisplay-Medium"} mb={".5rem"}>
                     Number of Items:
                   </Typography>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                  <TextField
                     size="small"
                     sx={{
                       border: "3px solid",
@@ -330,11 +344,7 @@ const Home = () => {
                     onChange={(e) => {
                       setFormData({ ...formData, items: e.target.value });
                     }}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6} textAlign={"left"}>
@@ -357,9 +367,9 @@ const Home = () => {
                       width: "100%",
                     }}
                   >
-                    <MenuItem value={"Easy"}>Easy</MenuItem>
-                    <MenuItem value={"Medium"}>Medium</MenuItem>
-                    <MenuItem value={"Hard"}>Hard</MenuItem>
+                    <MenuItem value={"easy"}>Easy</MenuItem>
+                    <MenuItem value={"medium"}>Medium</MenuItem>
+                    <MenuItem value={"hard"}>Hard</MenuItem>
                   </Select>
                 </Grid>
 
@@ -383,9 +393,12 @@ const Home = () => {
                       width: "100%",
                     }}
                   >
-                    <MenuItem value={"Any Category"}>Any Category</MenuItem>
-                    <MenuItem value={"Medium"}>Music</MenuItem>
-                    <MenuItem value={"Hard"}>Arts</MenuItem>
+                    <MenuItem value={"any_category"}>Any Category</MenuItem>
+                    {categoryList?.map((category) => (
+                      <MenuItem value={category.id} key={category.id}>
+                        {category.name}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </Grid>
 
@@ -409,9 +422,8 @@ const Home = () => {
                       width: "100%",
                     }}
                   >
-                    <MenuItem value={"Any Type"}>Any Type</MenuItem>
-                    <MenuItem value={"Medium"}>True or False</MenuItem>
-                    <MenuItem value={"Hard"}>Multiple Choice</MenuItem>
+                    <MenuItem value={"multiple"}>Multiple Choice</MenuItem>
+                    <MenuItem value={"bool"}>True or False</MenuItem>
                   </Select>
                 </Grid>
 
@@ -429,9 +441,9 @@ const Home = () => {
                       setFormData({
                         name: "",
                         numberOfItems: 10,
-                        difficulty: "Easy",
-                        category: "Any Category",
-                        quizType: "Any Type",
+                        difficulty: "easy",
+                        category: "any_category",
+                        quizType: "multiple",
                       });
                     }}
                   >
