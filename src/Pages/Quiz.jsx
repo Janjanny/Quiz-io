@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Modal } from "@mui/material";
+import { Box, Button, Typography, Modal, Stack } from "@mui/material";
 import QuizBox from "../Components/QuizBox";
 import {
   yellowButtonStyles,
@@ -91,14 +91,43 @@ const Quiz = () => {
         score++;
       }
     }
-    // dispatch(
-    //   setTemplate({
-    //     totalScore: 5,
-    //   })
-    // );
+
     setScore(score);
     handleOpen();
     return score;
+  };
+
+  // Function to reset quiz state
+  const resetQuiz = () => {
+    setQuizList([]);
+    setUserAnswers(Array(templateValues.items).fill(""));
+    setScore(0);
+  };
+
+  // Function to handle "Try Again" button click
+  const handleTryAgain = () => {
+    resetQuiz();
+    handleClose(); // Close the modal
+    window.scrollTo(0, 0);
+
+    // Fetch new quiz questions
+    const fetchQuizes = async () => {
+      try {
+        const quizes = await fetchAPI(
+          `https://opentdb.com/api.php?amount=${templateValues.items}${
+            templateValues.category === "any_category"
+              ? ""
+              : `&category=${templateValues.category}`
+          }&difficulty=${templateValues.difficulty}&type=${
+            templateValues.quizType
+          }`
+        );
+        setQuizList(quizes.results);
+      } catch (error) {
+        console.log("error while fetching: ", error);
+      }
+    };
+    fetchQuizes();
   };
 
   return (
@@ -110,14 +139,14 @@ const Quiz = () => {
           sx={{ backgroundColor: "primary.light" }}
           paddingBottom={"15rem"}
         >
-          <Box textAlign={"center"}>
+          {/* <Box textAlign={"center"}>
             <strong>Templates</strong>
             <p>{templateValues.name}</p>
             <p>{templateValues.items}</p>
             <p>{templateValues.difficulty}</p>
             <p>{templateValues.category}</p>
             <p>{templateValues.quizType}</p>
-          </Box>
+          </Box> */}
           {/* container */}
           <Box width={{ xs: "90%", md: "80%" }} margin={"0 auto"}>
             <Box
@@ -175,9 +204,10 @@ const Quiz = () => {
                     <QuizBoxBool
                       key={index}
                       question={quiz.question}
-                      index={index + 1}
+                      quizListIndex={index}
                       incorrect_answers={quiz.incorrect_answers}
                       correct_answer={quiz.correct_answer}
+                      onAnswerChange={handleAnwserChange}
                     />
                   ))}
 
@@ -236,27 +266,45 @@ const Quiz = () => {
                     sx={{ mt: 2 }}
                     color={"primary.dark"}
                     fontFamily={"ClashDisplay-Medium"}
-                    fontSize={"1rem"}
+                    fontSize={"1.2rem"}
                   >
                     Congratulations for completing the quiz! You got a total
-                    score of {score}.
+                    score of <strong>{score}</strong>.
                   </Typography>
 
-                  <Button
-                    onClick={handleClose}
-                    sx={{
-                      cursor: "pointer",
-                      color: "primary.dark",
-                      width: "fit-content",
-                      margin: "0 auto",
-                      ...greenButtonStyles,
-                      fontFamily: "ClashDisplay-Bold",
-                      textTransform: "capitalize",
-                      mt: "1.5rem",
-                    }}
-                  >
-                    Confirm
-                  </Button>
+                  <Stack direction={"row"} gap={"12px"}>
+                    <Button
+                      onClick={handleTryAgain}
+                      sx={{
+                        cursor: "pointer",
+                        color: "primary.dark",
+                        width: "fit-content",
+                        margin: "0 auto",
+                        ...redButtonStyles,
+                        fontFamily: "ClashDisplay-Bold",
+                        textTransform: "capitalize",
+                        mt: "1.5rem",
+                      }}
+                    >
+                      Try Again
+                    </Button>
+
+                    <Button
+                      onClick={handleClose}
+                      sx={{
+                        cursor: "pointer",
+                        color: "primary.dark",
+                        width: "fit-content",
+                        margin: "0 auto",
+                        ...greenButtonStyles,
+                        fontFamily: "ClashDisplay-Bold",
+                        textTransform: "capitalize",
+                        mt: "1.5rem",
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                  </Stack>
                 </Box>
               </Modal>
             </Box>

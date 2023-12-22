@@ -13,18 +13,20 @@ import {
 
 const QuizBoxBool = ({
   question,
-  incorrect_answers,
-  correct_answer,
-  index,
+
+  quizListIndex,
+  onAnswerChange,
 }) => {
-  const [choiceList, setChoiceList] = useState([]);
-  const firstMount = useRef(true);
   const choices = ["True", "False"];
 
-  const [isClicked, setIsClicked] = useState("");
+  const [isClicked, setIsClicked] = useState(null);
 
   const handleIsClicked = (answer) => {
-    setIsClicked(answer);
+    if (isClicked == null) {
+      setIsClicked(answer);
+
+      onAnswerChange(quizListIndex, answer);
+    }
   };
 
   return (
@@ -45,7 +47,9 @@ const QuizBoxBool = ({
         fontFamily={"ClashDisplay-Medium"}
         fontWeight={"600"}
         sx={{ fontSize: "clamp(.9rem, 4vw, 1.1rem)" }}
-        dangerouslySetInnerHTML={{ __html: `${index}.) ${question}` }}
+        dangerouslySetInnerHTML={{
+          __html: `${quizListIndex + 1}.) ${question}`,
+        }}
       />
 
       {/* grid choices */}
@@ -60,7 +64,7 @@ const QuizBoxBool = ({
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <Typography
               onClick={() => {
-                handleIsClicked("a");
+                handleIsClicked(choices[0]);
               }}
               sx={{
                 cursor: "pointer",
@@ -70,7 +74,7 @@ const QuizBoxBool = ({
                 fontFamily: "ClashDisplay-Medium",
                 textTransform: "capitalize",
                 textAlign: "left",
-                ...(isClicked === "a"
+                ...(isClicked === choices[0]
                   ? blueButtonStylesActive
                   : blueButtonStyles),
                 padding: ".6rem",
@@ -82,7 +86,7 @@ const QuizBoxBool = ({
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <Typography
               onClick={() => {
-                handleIsClicked("b");
+                handleIsClicked(choices[1]);
               }}
               sx={{
                 cursor: "pointer",
@@ -92,7 +96,7 @@ const QuizBoxBool = ({
                 fontFamily: "ClashDisplay-Medium",
                 textTransform: "capitalize",
                 textAlign: "left",
-                ...(isClicked === "b"
+                ...(isClicked === choices[1]
                   ? redButtonStylesActive
                   : redButtonStyles),
                 padding: ".6rem",
