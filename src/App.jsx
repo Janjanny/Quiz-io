@@ -10,6 +10,7 @@ import Home from "./Pages/Home";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Quiz from "./Pages/Quiz";
+import Rankings from "./Pages/Rankings";
 
 function App() {
   const theme = createTheme({
@@ -96,6 +97,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/quiz" element={<Quiz />} />
+            <Route path="/rankings" element={<Rankings />} />
           </Routes>
           <Footer />
         </Box>
