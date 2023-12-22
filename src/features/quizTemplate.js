@@ -9,6 +9,7 @@ export const quizTemplateSlice = createSlice({
       difficulty: "easy",
       category: "any category",
       quizType: "any type",
+      totalScore: 0,
     },
   },
 

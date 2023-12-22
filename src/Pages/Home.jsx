@@ -109,14 +109,6 @@ const Home = () => {
     }
   };
 
-  // // useEffect to show alert after state update
-  // useEffect(() => {
-  //   if (nameError || itemsError) {
-  //     alert(errorMesage);
-  //   }
-  // }, [nameError, itemsError, errorMesage]);
-
-  // console.log(values);
   return (
     <>
       {/* home container */}

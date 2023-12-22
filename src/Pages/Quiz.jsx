@@ -1,15 +1,22 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Modal } from "@mui/material";
 import QuizBox from "../Components/QuizBox";
-import { yellowButtonStyles } from "../utils/styles";
+import {
+  yellowButtonStyles,
+  redButtonStyles,
+  greenButtonStyles,
+} from "../utils/styles";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { fetchAPI } from "../utils/fetch";
+import { useDispatch } from "react-redux";
 import QuizBoxBool from "../Components/QuizBoxBool";
+import { setTemplate } from "../features/quizTemplate";
 
 const Quiz = () => {
   const templateValues = useSelector((state) => state.quizTemplate.value);
   const [quizList, setQuizList] = useState([]);
   const firstMount = useRef(true);
+  const dispatch = useDispatch();
 
   // templateValues && Object.keys(templateValues).length > 0
   useEffect(() => {
@@ -39,15 +46,60 @@ const Quiz = () => {
     }
   }, []);
 
-  // console.log("redux values: ", templateValues);
-  console.log(
-    `https://opentdb.com/api.php?amount=${templateValues.items}${
-      templateValues.category === "any_category"
-        ? ""
-        : `&category=${templateValues.category}`
-    }&difficulty=${templateValues.difficulty}&type=${templateValues.quizType}`
+  // for score modal
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+
+  //handle and track answers
+
+  // state with a length that depends on the no. of items
+  const [userAnswers, setUserAnswers] = useState(
+    Array(templateValues.items).fill("")
   );
-  console.log(quizList);
+  console.log(userAnswers);
+
+  // handle submitted answers
+  const handleAnwserChange = (index, answer) => {
+    // update the user's answer when they select an option
+    const newAnswers = [...userAnswers];
+    newAnswers[index] = answer;
+    setUserAnswers(newAnswers);
+  };
+
+  // checking the answers
+
+  // storage for the correct answers
+  const correctAnswers = [];
+  quizList.map((quiz) => {
+    correctAnswers.push(quiz.correct_answer);
+  });
+
+  const [score, setScore] = useState(0);
+  // function for comparing the userAnswers and the correctAnswers
+  const handleSubmitQuiz = () => {
+    let score = 0;
+
+    for (let i = 0; i < correctAnswers.length; i++) {
+      if (correctAnswers[i] === userAnswers[i]) {
+        score++;
+      }
+    }
+    // dispatch(
+    //   setTemplate({
+    //     totalScore: 5,
+    //   })
+    // );
+    setScore(score);
+    handleOpen();
+    return score;
+  };
 
   return (
     <>
@@ -113,9 +165,10 @@ const Quiz = () => {
                     <QuizBox
                       key={index}
                       question={quiz.question}
-                      index={index + 1}
+                      quizListIndex={index}
                       incorrect_answers={quiz.incorrect_answers}
                       correct_answer={quiz.correct_answer}
+                      onAnswerChange={handleAnwserChange}
                     />
                   ))
                 : quizList.map((quiz, index) => (
@@ -133,6 +186,7 @@ const Quiz = () => {
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
                 <Button
+                  onClick={handleSubmitQuiz}
                   sx={{
                     cursor: "pointer",
                     color: "primary.dark",
@@ -146,6 +200,65 @@ const Quiz = () => {
                   Submit Quiz
                 </Button>
               </Box>
+
+              {/* score modal */}
+              <Modal
+                open={modalOpen}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: 400,
+                    bgcolor: "primary.main",
+                    border: "4px solid",
+                    borderColor: "primary.dark",
+                    boxShadow: "5px 12px 0px 0px #090909",
+                    p: 4,
+                    borderRadius: "12px",
+                  }}
+                >
+                  <Typography
+                    id="modal-modal-title"
+                    fontFamily={"ClashDisplay-Bold"}
+                    fontSize={"1.5rem"}
+                    color={"green.main"}
+                  >
+                    Done!
+                  </Typography>
+                  <Typography
+                    id="modal-modal-description"
+                    sx={{ mt: 2 }}
+                    color={"primary.dark"}
+                    fontFamily={"ClashDisplay-Medium"}
+                    fontSize={"1rem"}
+                  >
+                    Congratulations for completing the quiz! You got a total
+                    score of {score}.
+                  </Typography>
+
+                  <Button
+                    onClick={handleClose}
+                    sx={{
+                      cursor: "pointer",
+                      color: "primary.dark",
+                      width: "fit-content",
+                      margin: "0 auto",
+                      ...greenButtonStyles,
+                      fontFamily: "ClashDisplay-Bold",
+                      textTransform: "capitalize",
+                      mt: "1.5rem",
+                    }}
+                  >
+                    Confirm
+                  </Button>
+                </Box>
+              </Modal>
             </Box>
           </Box>
         </Box>

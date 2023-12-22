@@ -11,7 +11,13 @@ import {
   blueButtonStylesActive,
 } from "../utils/styles";
 
-const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
+const QuizBox = ({
+  question,
+  incorrect_answers,
+  correct_answer,
+  quizListIndex,
+  onAnswerChange,
+}) => {
   const [choiceList, setChoiceList] = useState([]);
   const firstMount = useRef(true);
 
@@ -32,10 +38,47 @@ const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
     }
   }, []);
 
-  const [isClicked, setIsClicked] = useState("");
+  // choices
+  const getChoiceLetter = (index) => {
+    return String.fromCharCode(97 + index);
+  };
 
-  const handleIsClicked = (answer) => {
-    setIsClicked(answer);
+  // for active styles
+  const getActiveStyles = (index) => {
+    return index === 0
+      ? blueButtonStylesActive
+      : index === 1
+      ? yellowButtonStylesActive
+      : index === 2
+      ? redButtonStylesActive
+      : index === 3
+      ? greenButtonStylesActive
+      : "";
+  };
+
+  // for button styles
+  const getButtonStyles = (index) => {
+    return index === 0
+      ? blueButtonStyles
+      : index === 1
+      ? yellowButtonStyles
+      : index === 2
+      ? redButtonStyles
+      : index === 3
+      ? greenButtonStyles
+      : "";
+  };
+
+  const [isClicked, setIsClicked] = useState(null);
+
+  const handleIsClicked = (index, answer) => {
+    // Only update state if the choice hasn't been clicked
+    if (isClicked == null) {
+      setIsClicked(index);
+
+      // pass the answer to the parent element
+      onAnswerChange(quizListIndex, answer);
+    }
   };
 
   return (
@@ -56,7 +99,9 @@ const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
         fontFamily={"ClashDisplay-Medium"}
         fontWeight={"600"}
         sx={{ fontSize: "clamp(.9rem, 4vw, 1.1rem)" }}
-        dangerouslySetInnerHTML={{ __html: `${index}.) ${question}` }}
+        dangerouslySetInnerHTML={{
+          __html: `${quizListIndex + 1}.) ${question}`,
+        }}
       />
 
       {/* grid choices */}
@@ -68,97 +113,33 @@ const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
           mt={".5rem"}
           columnSpacing={{ xs: 0, md: 10 }}
         >
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <Typography
-              onClick={() => {
-                handleIsClicked("a");
-              }}
-              sx={{
-                cursor: "pointer",
-                color: "primary.dark",
-                width: "100%",
-                margin: "0 auto",
-                fontFamily: "ClashDisplay-Medium",
-                textTransform: "capitalize",
-                textAlign: "left",
-                ...(isClicked === "a"
-                  ? blueButtonStylesActive
-                  : blueButtonStyles),
-                padding: ".6rem",
-                borderRadius: "10px",
-              }}
-              dangerouslySetInnerHTML={{ __html: `a.) ${choiceList[0]}` }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <Typography
-              onClick={() => {
-                handleIsClicked("b");
-              }}
-              sx={{
-                cursor: "pointer",
-                color: "primary.dark",
-                width: "100%",
-                margin: "0 auto",
-                fontFamily: "ClashDisplay-Medium",
-                textTransform: "capitalize",
-                textAlign: "left",
-                ...(isClicked === "b"
-                  ? yellowButtonStylesActive
-                  : yellowButtonStyles),
-                padding: ".6rem",
-                borderRadius: "10px",
-              }}
-              dangerouslySetInnerHTML={{ __html: `b.) ${choiceList[1]}` }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <Typography
-              onClick={() => {
-                handleIsClicked("c");
-              }}
-              sx={{
-                cursor: "pointer",
-                color: "primary.dark",
-                width: "100%",
-                margin: "0 auto",
-                fontFamily: "ClashDisplay-Medium",
-                textTransform: "capitalize",
-                textAlign: "left",
-                ...(isClicked === "c"
-                  ? redButtonStylesActive
-                  : redButtonStyles),
-                padding: ".6rem",
-                borderRadius: "10px",
-              }}
-              dangerouslySetInnerHTML={{ __html: `c.) ${choiceList[2]}` }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <Typography
-              onClick={() => {
-                handleIsClicked("d");
-              }}
-              sx={{
-                cursor: "pointer",
-                color: "primary.dark",
-                width: "100%",
-                margin: "0 auto",
-                fontFamily: "ClashDisplay-Medium",
-                textTransform: "capitalize",
-                textAlign: "left",
-                ...(isClicked === "d"
-                  ? greenButtonStylesActive
-                  : greenButtonStyles),
-                padding: ".6rem",
-                borderRadius: "10px",
-              }}
-              dangerouslySetInnerHTML={{ __html: `d.) ${choiceList[3]}` }}
-            />
-          </Grid>
+          {choiceList.map((choice, index) => (
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+              <Typography
+                key={index}
+                onClick={() => {
+                  handleIsClicked(index, choice);
+                }}
+                sx={{
+                  cursor: "pointer",
+                  color: "primary.dark",
+                  width: "100%",
+                  margin: "0 auto",
+                  fontFamily: "ClashDisplay-Medium",
+                  textTransform: "capitalize",
+                  textAlign: "left",
+                  ...(isClicked === index
+                    ? getActiveStyles(index)
+                    : getButtonStyles(index)),
+                  padding: ".6rem",
+                  borderRadius: "10px",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: `${getChoiceLetter(index)}.) ${choice}`,
+                }}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </Box>
