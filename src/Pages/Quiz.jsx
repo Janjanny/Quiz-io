@@ -4,6 +4,7 @@ import { yellowButtonStyles } from "../utils/styles";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { fetchAPI } from "../utils/fetch";
+import QuizBoxBool from "../Components/QuizBoxBool";
 
 const Quiz = () => {
   const templateValues = useSelector((state) => state.quizTemplate.value);
@@ -107,14 +108,25 @@ const Quiz = () => {
               flexDirection={"column"}
               gap={"5rem"}
             >
-              {quizList.map((quiz, index) => (
-                <QuizBox
-                  question={quiz.question}
-                  index={index + 1}
-                  incorrect_answers={quiz.incorrect_answers}
-                  correct_answer={quiz.correct_answer}
-                />
-              ))}
+              {templateValues.quizType == "multiple"
+                ? quizList.map((quiz, index) => (
+                    <QuizBox
+                      key={index}
+                      question={quiz.question}
+                      index={index + 1}
+                      incorrect_answers={quiz.incorrect_answers}
+                      correct_answer={quiz.correct_answer}
+                    />
+                  ))
+                : quizList.map((quiz, index) => (
+                    <QuizBoxBool
+                      key={index}
+                      question={quiz.question}
+                      index={index + 1}
+                      incorrect_answers={quiz.incorrect_answers}
+                      correct_answer={quiz.correct_answer}
+                    />
+                  ))}
 
               <Box
                 width={"100%"}

@@ -11,26 +11,15 @@ import {
   blueButtonStylesActive,
 } from "../utils/styles";
 
-const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
+const QuizBoxBool = ({
+  question,
+  incorrect_answers,
+  correct_answer,
+  index,
+}) => {
   const [choiceList, setChoiceList] = useState([]);
   const firstMount = useRef(true);
-
-  useEffect(() => {
-    if (firstMount.current) {
-      firstMount.current = false;
-      const choices = Array.isArray(incorrect_answers)
-        ? [...incorrect_answers, correct_answer]
-        : [incorrect_answers, correct_answer];
-
-      // Fisher-Yates shuffle algorithm to randomize the order
-      for (let i = choices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [choices[i], choices[j]] = [choices[j], choices[i]];
-      }
-
-      setChoiceList(choices);
-    }
-  }, []);
+  const choices = ["True", "False"];
 
   const [isClicked, setIsClicked] = useState("");
 
@@ -40,7 +29,7 @@ const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
 
   return (
     <Box
-      width={{ xs: "100%", sm: "90%", md: "80%" }}
+      width={"80%"}
       marginInline={"auto"}
       sx={{
         backgroundColor: "primary.main",
@@ -87,8 +76,7 @@ const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
                 padding: ".6rem",
                 borderRadius: "10px",
               }}
-              dangerouslySetInnerHTML={{ __html: `a.) ${choiceList[0]}` }}
-            />
+            >{`a.) ${choices[0]}`}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -105,63 +93,16 @@ const QuizBox = ({ question, incorrect_answers, correct_answer, index }) => {
                 textTransform: "capitalize",
                 textAlign: "left",
                 ...(isClicked === "b"
-                  ? yellowButtonStylesActive
-                  : yellowButtonStyles),
-                padding: ".6rem",
-                borderRadius: "10px",
-              }}
-              dangerouslySetInnerHTML={{ __html: `b.) ${choiceList[1]}` }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <Typography
-              onClick={() => {
-                handleIsClicked("c");
-              }}
-              sx={{
-                cursor: "pointer",
-                color: "primary.dark",
-                width: "100%",
-                margin: "0 auto",
-                fontFamily: "ClashDisplay-Medium",
-                textTransform: "capitalize",
-                textAlign: "left",
-                ...(isClicked === "c"
                   ? redButtonStylesActive
                   : redButtonStyles),
                 padding: ".6rem",
                 borderRadius: "10px",
               }}
-              dangerouslySetInnerHTML={{ __html: `c.) ${choiceList[2]}` }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <Typography
-              onClick={() => {
-                handleIsClicked("d");
-              }}
-              sx={{
-                cursor: "pointer",
-                color: "primary.dark",
-                width: "100%",
-                margin: "0 auto",
-                fontFamily: "ClashDisplay-Medium",
-                textTransform: "capitalize",
-                textAlign: "left",
-                ...(isClicked === "d"
-                  ? greenButtonStylesActive
-                  : greenButtonStyles),
-                padding: ".6rem",
-                borderRadius: "10px",
-              }}
-              dangerouslySetInnerHTML={{ __html: `d.) ${choiceList[3]}` }}
-            />
+            >{`b.) ${choices[1]}`}</Typography>
           </Grid>
         </Grid>
       </Box>
     </Box>
   );
 };
-export default QuizBox;
+export default QuizBoxBool;

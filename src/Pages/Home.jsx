@@ -7,6 +7,7 @@ import {
   Select,
   MenuItem,
   Button,
+  Modal,
 } from "@mui/material";
 import {
   yellowButtonStyles,
@@ -32,6 +33,7 @@ import { fetchAPI } from "../utils/fetch";
 const Home = () => {
   const [categoryList, setCategoryList] = useState([]);
   const firstMount = useRef(true);
+
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo(0, 0);
@@ -51,7 +53,13 @@ const Home = () => {
   }, []);
 
   const dispatch = useDispatch();
-  const [isClicked, setIsClicked] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+  const handleClose = () => {
+    setModalOpen(false);
+  };
 
   // state for form
   const [formData, setFormData] = useState({
@@ -62,25 +70,51 @@ const Home = () => {
     quizType: "multiple", // Set a default value
   });
 
-  const handleButtonClick = () => {
-    setIsClicked(!isClicked);
-  };
   const navigate = useNavigate();
 
-  const handleFormSubmit = () => {
-    dispatch(
-      setTemplate({
-        name: formData.name,
-        items: formData.items,
-        difficulty: formData.difficulty,
-        category: formData.category,
-        quizType: formData.quizType,
-      })
-    );
+  const [nameError, setNameError] = useState(false);
+  const [itemsError, setItemsError] = useState(false);
+  const [errorMesage, setErrorMessage] = useState("");
 
-    // Redirect to /quiz after submitting the form
-    navigate("/quiz");
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // error handlers
+    if (!formData.name.trim()) {
+      setNameError(true);
+      setErrorMessage("Please put a name");
+      handleOpen();
+      return;
+    } else if (formData.items < 1 || formData.items > 50) {
+      setItemsError(true);
+      setErrorMessage(
+        "The number of items must be greater than 1 and less than 50"
+      );
+      handleOpen();
+
+      return;
+    } else {
+      // if no errror dispatch the values and send the user to quiz
+      dispatch(
+        setTemplate({
+          name: formData.name,
+          items: formData.items,
+          difficulty: formData.difficulty,
+          category: formData.category,
+          quizType: formData.quizType,
+        })
+      );
+
+      // Redirect to /quiz after submitting the form
+      navigate("/quiz");
+    }
   };
+
+  // // useEffect to show alert after state update
+  // useEffect(() => {
+  //   if (nameError || itemsError) {
+  //     alert(errorMesage);
+  //   }
+  // }, [nameError, itemsError, errorMesage]);
 
   // console.log(values);
   return (
@@ -107,7 +141,6 @@ const Home = () => {
             transform: "translate(-50%,-50%)",
             textAlign: "center",
             zIndex: "5",
-            overflow: "hidden",
           }}
         >
           <Typography
@@ -284,7 +317,7 @@ const Home = () => {
               border: "4px solid",
               borderColor: "primary.dark",
               borderRadius: "16px",
-              boxShadow: " 5px 12px 0px 0px #1e1e1e",
+              boxShadow: " 5px 12px 0px 0px #090909",
               position: "relative",
               zIndex: "5",
             }}
@@ -299,7 +332,12 @@ const Home = () => {
             >
               Quiz Form
             </Typography>
-            <Box component={"form"} width={"100%"} mt={"3rem"}>
+            <Box
+              component={"form"}
+              width={"100%"}
+              mt={"3rem"}
+              onSubmit={handleFormSubmit}
+            >
               <Grid
                 container
                 width={"100%"}
@@ -332,6 +370,7 @@ const Home = () => {
                     Number of Items:
                   </Typography>
                   <TextField
+                    type="number"
                     size="small"
                     sx={{
                       border: "3px solid",
@@ -423,7 +462,7 @@ const Home = () => {
                     }}
                   >
                     <MenuItem value={"multiple"}>Multiple Choice</MenuItem>
-                    <MenuItem value={"bool"}>True or False</MenuItem>
+                    <MenuItem value={"boolean"}>True or False</MenuItem>
                   </Select>
                 </Grid>
 
@@ -453,9 +492,6 @@ const Home = () => {
 
                 <Grid item xs={12} sm={12} lg={6} textAlign={"left"}>
                   <Button
-                    onClick={() => {
-                      handleFormSubmit();
-                    }}
                     sx={{
                       fontFamily: "ClashDisplay-Bold",
                       textTransform: "capitalize",
@@ -464,11 +500,70 @@ const Home = () => {
                       marginTop: { xs: ".5rem", md: "4rem" },
                       width: { xs: "100%", md: "fit-content" },
                     }}
+                    type="submit"
                   >
                     Submit Form
                   </Button>
                 </Grid>
               </Grid>
+
+              {/* modal */}
+              <Modal
+                open={modalOpen}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: 400,
+                    bgcolor: "primary.main",
+                    border: "4px solid",
+                    borderColor: "primary.dark",
+                    boxShadow: "5px 12px 0px 0px #090909",
+                    p: 4,
+                    borderRadius: "12px",
+                  }}
+                >
+                  <Typography
+                    id="modal-modal-title"
+                    fontFamily={"ClashDisplay-Bold"}
+                    fontSize={"1.5rem"}
+                    color={"red.main"}
+                  >
+                    Warning!
+                  </Typography>
+                  <Typography
+                    id="modal-modal-description"
+                    sx={{ mt: 2 }}
+                    color={"primary.dark"}
+                    fontFamily={"ClashDisplay-Medium"}
+                    fontSize={"1rem"}
+                  >
+                    {errorMesage}
+                  </Typography>
+
+                  <Button
+                    onClick={handleClose}
+                    sx={{
+                      cursor: "pointer",
+                      color: "primary.dark",
+                      width: "fit-content",
+                      margin: "0 auto",
+                      ...redButtonStyles,
+                      fontFamily: "ClashDisplay-Bold",
+                      textTransform: "capitalize",
+                      mt: "1.5rem",
+                    }}
+                  >
+                    Okay!
+                  </Button>
+                </Box>
+              </Modal>
             </Box>
           </Box>
         </Box>
