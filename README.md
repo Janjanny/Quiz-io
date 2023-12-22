@@ -5,4 +5,4 @@ Quiz.io is a React and Material-UI powered quiz platform. The frontend offers a 
 Design Link: https://www.figma.com/file/M8XZfvlw6DSMwPuPeG0a3d/Quiz.io?type=design&node-id=26%3A103&mode=design&t=JjzRcIQGJCdUFGty-1
 
 Preview:
-(src/assets/Home.png)
+![Preview](/assets/Home.png)
