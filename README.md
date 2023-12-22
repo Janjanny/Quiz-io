@@ -1,8 +1,8 @@
-# React + Vite
+#Quiz.io
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Quiz.io is a React and Material-UI powered quiz platform. The frontend offers a neubrutalism user interface, while the backend utilizes Trivia Open DB API with PHP. Dive into a world of knowledge and fun!
 
-Currently, two official plugins are available:
+Design Link: https://www.figma.com/file/M8XZfvlw6DSMwPuPeG0a3d/Quiz.io?type=design&node-id=26%3A103&mode=design&t=JjzRcIQGJCdUFGty-1
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Preview:
+(src/assets/Home.png)
