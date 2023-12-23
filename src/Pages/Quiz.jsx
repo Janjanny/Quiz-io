@@ -256,8 +256,9 @@ const Quiz = () => {
                   <Typography
                     id="modal-modal-title"
                     fontFamily={"ClashDisplay-Bold"}
-                    fontSize={"1.5rem"}
+                    fontSize={"2rem"}
                     color={"green.main"}
+                    lineHeight={"2rem"}
                   >
                     Done!
                   </Typography>
@@ -267,10 +268,93 @@ const Quiz = () => {
                     color={"primary.dark"}
                     fontFamily={"ClashDisplay-Medium"}
                     fontSize={"1.2rem"}
+                    mb={"1.5rem"}
                   >
-                    Congratulations for completing the quiz! You got a total
-                    score of <strong>{score}</strong>.
+                    Congratulations <strong>{templateValues.name}</strong>! for
+                    completing the quiz. Here are you results.
                   </Typography>
+                  <Stack
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                    paddingInline={"12px"}
+                  >
+                    <Typography
+                      fontFamily={"ClashDisplay-Medium"}
+                      fontSize={"1.1rem"}
+                    >
+                      Number of Items:{" "}
+                    </Typography>
+                    <Typography
+                      fontFamily={"ClashDisplay-Bold"}
+                      fontSize={"1.1rem"}
+                    >
+                      {templateValues.items}
+                    </Typography>
+                  </Stack>
+
+                  <Stack
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                    paddingInline={"12px"}
+                  >
+                    <Typography
+                      fontFamily={"ClashDisplay-Medium"}
+                      fontSize={"1.1rem"}
+                    >
+                      Difficulty:{" "}
+                    </Typography>
+                    <Typography
+                      fontFamily={"ClashDisplay-Bold"}
+                      fontSize={"1.1rem"}
+                    >
+                      {templateValues.difficulty}
+                    </Typography>
+                  </Stack>
+
+                  <Stack
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                    paddingInline={"12px"}
+                    sx={{
+                      paddingBottom: "12px",
+                      borderBottom: "3px solid",
+                      borderBottomColor: "primary.dark",
+                    }}
+                  >
+                    <Typography
+                      fontFamily={"ClashDisplay-Medium"}
+                      fontSize={"1.1rem"}
+                    >
+                      Score:{" "}
+                    </Typography>
+                    <Typography
+                      fontFamily={"ClashDisplay-Bold"}
+                      fontSize={"1.1rem"}
+                    >
+                      {score}
+                    </Typography>
+                  </Stack>
+
+                  <Stack
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                    paddingInline={"12px"}
+                    mt={"1rem"}
+                  >
+                    <Typography
+                      fontFamily={"ClashDisplay-Medium"}
+                      fontSize={"1.5rem"}
+                    >
+                      Rating:{" "}
+                    </Typography>
+                    <Typography
+                      fontFamily={"ClashDisplay-Bold"}
+                      fontSize={"1.5rem"}
+                      color={"green.dark"}
+                    >
+                      9.9
+                    </Typography>
+                  </Stack>
 
                   <Stack direction={"row"} gap={"12px"}>
                     <Button

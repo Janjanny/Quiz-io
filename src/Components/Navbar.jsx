@@ -48,7 +48,7 @@ const Navbar = () => {
         justifyContent={"space-between"}
       >
         <Box>
-          <Link to="/quiz" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             <Typography
               fontFamily={"ClashDisplay-Bold"}
               color={"primary.dark"}
