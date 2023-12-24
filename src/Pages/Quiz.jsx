@@ -17,6 +17,7 @@ const Quiz = () => {
   const [quizList, setQuizList] = useState([]);
   const firstMount = useRef(true);
   const dispatch = useDispatch();
+  const [rating, setRating] = useState("");
 
   // templateValues && Object.keys(templateValues).length > 0
   useEffect(() => {
@@ -83,8 +84,10 @@ const Quiz = () => {
 
   const [score, setScore] = useState(0);
   // function for comparing the userAnswers and the correctAnswers
-  const handleSubmitQuiz = () => {
+  const handleSubmitQuiz = (difficulty) => {
     let score = 0;
+    let rating = 0;
+    const maxRating = 0;
 
     for (let i = 0; i < correctAnswers.length; i++) {
       if (correctAnswers[i] === userAnswers[i]) {
@@ -92,7 +95,27 @@ const Quiz = () => {
       }
     }
 
+    // Adjust score based on difficulty
+    switch (difficulty.toLowerCase()) {
+      case "easy":
+        // Easy difficulty - no adjustment to the score
+        rating = score * 0.5;
+        break;
+      case "medium":
+        // Medium difficulty - increase the score by 20%
+        rating = score * 0.7;
+        break;
+      case "hard":
+        // Hard difficulty - allow for a perfect 10 rating if all answers are correct
+        rating = score * 0.9;
+        break;
+      default:
+        // Handle unrecognized difficulty levels here
+        break;
+    }
+
     setScore(score);
+    setRating(rating);
     handleOpen();
     return score;
   };
@@ -216,7 +239,9 @@ const Quiz = () => {
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
                 <Button
-                  onClick={handleSubmitQuiz}
+                  onClick={() => {
+                    handleSubmitQuiz(templateValues.difficulty);
+                  }}
                   sx={{
                     cursor: "pointer",
                     color: "primary.dark",
@@ -352,7 +377,7 @@ const Quiz = () => {
                       fontSize={"1.5rem"}
                       color={"green.dark"}
                     >
-                      9.9
+                      {rating}
                     </Typography>
                   </Stack>
 
